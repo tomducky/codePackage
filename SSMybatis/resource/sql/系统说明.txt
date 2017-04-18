@@ -1,0 +1,5 @@
+该系统采用的框架是：spring+springmvc+mybatis+framemarker
+该系统具有的功能有：用户登录，用户注册，对用户的增删改查，用户信息的分页显示，以及推出系统等功能。
+该系统采用的数据库是:mysql5.6
+
+更多的框架整合项目源码，欢迎访问我的小站：http://java.goodym.cn/

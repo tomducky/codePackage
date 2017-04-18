@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<!--
+		<tx:advice id="txAdvice" transaction-manager="txManager">
+
+		<tx:attributes> <tx:method name="*" /> </tx:attributes> </tx:advice>
+
+		<aop:config> <aop:pointcut id="daoOpera" expression="execution(*
+		com.bzu.dao.*.*(..))" /> <aop:advisor advice-ref="txAdvice"
+		pointcut-ref="daoOpera" /> </aop:config>
+	-->
+
+
+
+
+
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close" lazy-init="false">
+
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+		<property name="url"
+			value="jdbc:sqlserver://localhost:1433; DatabaseName=superMarket" />
+		<property name="username" value="sa"></property>
+		<property name="password" value="123456"></property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
+		lazy-init="false">
+		<!--
+			老师是这样配的 <property name="configLocation">
+			<value>classpath:hibernate.cfg.xml</value> </property>
+		-->
+
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/bzu/entity/Employer.hbm.xml</value>
+				<value>com/bzu/entity/EmployerWage.hbm.xml</value>
+				<value>com/bzu/entity/Goods.hbm.xml</value>
+				<value>com/bzu/entity/GoodsSell.hbm.xml</value>
+				<value>com/bzu/entity/GoodsSpend.hbm.xml</value>
+				<value>com/bzu/entity/Inputer.hbm.xml</value>
+				<value>com/bzu/entity/IntoGoods.hbm.xml</value>
+				<value>com/bzu/entity/Workday.hbm.xml</value>
+				<value>com/bzu/entity/Admin.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.SQLServerDialect
+				</prop>
+				<prop key="hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+
+				<!-- <prop key="current_session_context_class">Thread</prop> -->
+			</props>
+		</property>
+
+
+	</bean>
+
+
+	<bean id="superDao" class="com.bzu.dao.impl.SuperDao">
+		<property name="superSessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="adminDao" class="com.bzu.dao.impl.AdminDaoImpl">
+		<property name="osessionFactory" ref="sessionFactory"></property>
+
+	</bean>
+
+	<bean id="adminService" class="com.bzu.service.impl.AdminServiceImpl">
+		<property name="adminDao" ref="adminDao"></property>
+	</bean>
+
+	<bean id="employerDao" class="com.bzu.dao.impl.EmployerDaoImpl">
+		<property name="osessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="employerService" class="com.bzu.service.impl.EmployerServiceImpl">
+		<property name="employerDao" ref="employerDao"></property>
+	</bean>
+	<bean id="workdayDao" class="com.bzu.dao.impl.WorkdayDaoImpl">
+		<property name="osessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="workdayService" class="com.bzu.service.impl.WorkdayServiceImpl">
+		<property name="workdayDao" ref="workdayDao"></property>
+	</bean>
+
+	<bean id="goodsDao" class="com.bzu.dao.impl.GoodsDaoImpl">
+		<property name="osessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="goodsService" class="com.bzu.service.impl.GoodsServiceImpl">
+		<property name="goodsDao" ref="goodsDao"></property>
+	</bean>
+
+	<bean id="inputerDao" class="com.bzu.dao.impl.InputerDaoImpl">
+		<property name="osessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="inputerService" class="com.bzu.service.impl.InputerServiceImpl">
+		<property name="inputerDao" ref="inputerDao"></property>
+	</bean>
+	<bean id="intoGoodsDao" class="com.bzu.dao.impl.IntoGoodsDaoImpl">
+		<property name="osessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="intoGoodsService" class="com.bzu.service.impl.IntoGoodsServiceImpl">
+		<property name="intoGoodsDao" ref="intoGoodsDao"></property>
+	</bean>
+	
+	
+
+	<bean id="employerWageService" class="com.bzu.service.impl.EmployerWageServiceImpl">
+		<property name="intoGoodsDao" ref="intoGoodsDao"></property>
+	</bean>
+
+
+
+
+
+
+	<!--
+		<bean id="exce" class="com.bzu.action.ExecptionAction"></bean>
+
+		<aop:config> <aop:aspect id="exceAspect" ref="exce">
+		<aop:after-throwing method="execute" pointcut="execution(public *
+		com.bzu.dao..*.*(..))" /> </aop:aspect> </aop:config> <bean
+		id="hibernateUtil" class="com.bzu.util.HibernateUtil"> <property
+		name="sessionFactory" ref="sessionFactory"></property> </bean> <bean
+		id="txManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" /> </bean>
+	-->
+</beans>

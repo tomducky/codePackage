@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration >
+	
+	<!-- 别名 -->
+	<typeAliases >
+		<typeAlias type ="com.hoo.entity.Goods" alias ="Goods" />
+		<typeAlias type="com.hoo.entity.User" alias="User"/>
+	</typeAliases >
+	
+	<plugins>
+		<!-- 上线时关闭，调试的时候打印SQL使用。插件顺序不要调换 -->
+		<plugin interceptor="com.szy.common.utils.SQLInterceptor"/>
+		<plugin interceptor="com.hoo.intercept.PaginationInterceptor"> 
+			<!-- 指定数据库分页方言Dialect, 其它方言:OracleDialect,SQLServerDialect,SybaseDialect,DB2Dialect,PostgreSQLDialect,MySQLDialect,DerbyDialect--> 
+			<property name="dialectClass" value="cn.org.rapid_framework.jdbc.dialect.MySQLDialect"/> 
+		</plugin>  
+	</plugins>
+	
+</configuration > 

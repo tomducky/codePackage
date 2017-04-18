@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="OperateStudent" extends="struts-default">
+
+
+		<global-results>
+			<result name="error">/error.jsp</result>
+
+		</global-results>
+		<action name="AdminAction" class="com.bzu.action.AdminAction">
+
+			<result name="loginsuccess">/jsp/admin/default.jsp</result>
+			<result name="success">/jsp/admin/operaSuccess.jsp</result>
+			<result name="input">/jsp/admin/login.jsp</result>
+		</action>
+		<action name="EmployerAction" class="com.bzu.action.EmployerAction">
+
+			<result name="success"> /jsp/admin/employerlist.jsp</result>
+
+			<result name="deletesuccess" type="redirectAction">EmployerAction!emplyerList
+			</result>
+			<result name="dilog"> /jsp/admin/update_employerdilog.jsp</result>
+			<result name="operasuccess">/jsp/admin/operaSuccess.jsp</result>
+			<result name="worklist">/jsp/admin/todaywork.jsp</result>
+			<result name="employerworks" type="redirectAction">EmployerAction!workList
+			</result>
+			<result name="todayworklist">/jsp/admin/todayworklist.jsp</result>
+			<result name="workMap">/jsp/admin/workMap.jsp</result>
+
+		</action>
+		<action name="GoodsAction" class="com.bzu.action.GoodsAction">
+
+			<result name="goodslist">/jsp/admin/goodsList.jsp</result>
+			
+			<result name="deletesuccess" type="redirectAction">GoodsAction!goodsList</result>
+			
+			<result name="dilog"> /jsp/admin/update_goodsdilog.jsp</result>
+			<result name="addGoods"> /jsp/admin/addGoods.jsp</result>
+			
+			<result name="operasuccess">/jsp/admin/operaSuccess.jsp</result>
+
+		</action>
+		<action name="IntoGoodsAction" class="com.bzu.action.IntoGoodsAction">
+			<result name="addIntoGoods"> /jsp/admin/addIntoGoods.jsp</result>
+			<result name="operasuccess">/jsp/admin/operaSuccess.jsp</result>
+			<result name="intoGoodsList">/jsp/admin/intoGoodList.jsp</result>
+			<result name="deletesuccess" type="redirectAction">IntoGoodsAction!intoGoodsList</result>
+			<result name="dialog" >/jsp/admin/updateIntoGoods.jsp</result>
+		</action>
+		
+		<action name="EmployerWageAction" class="com.bzu.action.EmployerWageAction">
+		
+			<result name="employerWageList">/jsp/admin/employerWageList.jsp</result>
+			<result name="createWageSuccess">/jsp/admin/operaSuccess.jsp</result>
+			
+			<result name="spendlist">/jsp/admin/goodsSpendList.jsp</result>
+		
+		</action>
+		
+		<action name="InputerAction" class="com.bzu.action.InputerAction">
+		
+			<result name="inputerlist">/jsp/admin/inputerList.jsp</result>
+			<result name="operasuccess">/jsp/admin/operaSuccess.jsp</result>
+			<result name="dilog">/jsp/admin/update_inputer.jsp</result>
+			
+		</action>
+	</package>
+</struts>    

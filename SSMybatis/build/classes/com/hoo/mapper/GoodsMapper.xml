@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">      
+<mapper namespace="com.hoo.mapper.GoodsMapper">     
+      
+    <!--  java 对象与数据库字段对应，如果数据库字段与java对象属性名称一样，可以不写 -->  
+    <resultMap type="Goods" id="goodsId">  
+     <result column="goodsId" property="goodsId" javaType="int" />  
+     <result column="goodName" property="goodName" javaType="string" />  
+     <result column="price" property="price" javaType="float" />  
+    </resultMap>   
+      
+    <!-- 查询语句，parameterType为sql语句参数的类型,resultType 为执行这个 语句的返回类型-->  
+   <select id="getGoodsById" parameterType="int" resultType="Goods">      
+       select goodsId,goodName,price from goods where goodsId = #{goodsId}  
+    </select>  
+       
+    <insert id="saveGoods" parameterType="Goods" useGeneratedKeys="true"  >  
+      insert into goods(goodName,price) values(#{goodName},#{price})  
+    </insert>  
+      
+    <delete id="deleteGoodsById" parameterType="int"  >  
+     delete from goods where goodsId=#{goodsId}  
+    </delete>  
+    <!-- 传递多个参数，使用javaBean 这里要注意参数的名字(也就是#{}里面的参数)一定要和javaBean属性名字一样，否则会抛出异常（mybatis要调用getxxx给参数赋值）  -->  
+    <update id="updateGoodsById" parameterType="Goods"  >  
+        update goods set price=#{price} where goodsId=#{goodsId}  
+    </update>  
+    <!-- 使用map传递多个参数   参数名称为的key -->  
+    <update id="updateGoodsByIdByMap" parameterType="map" >  
+      update goods set price=#{price} where goodsId=#{id};  
+    </update>  
+</mapper>   

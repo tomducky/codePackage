@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+	http://www.springframework.org/schema/beans   
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd   
+	http://www.springframework.org/schema/tx   
+	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd   
+	http://www.springframework.org/schema/context   
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd   
+	http://www.springframework.org/schema/util    
+	http://www.springframework.org/schema/util/spring-util-3.0.xsd   
+	http://www.springframework.org/schema/cache    
+	http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+<!-- 注解探测器 -->
+<context:component-scan base-package ="com.hoo" />
+
+<!-- annotation默认的方法映射适配器 -->
+	<bean id ="handlerMapping" class ="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+	<bean id ="handlerAdapter" class ="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+
+ <!-- 插件 用来拦截select做分页查询 -->
+	<bean id="paginationInterceptor" class="com.hoo.intercept.PaginationInterceptor"></bean> 
+
+<!-- 存放静态资源文件  如：图片、CSS等 放其他地方、系统将无法识别--> 
+	<mvc:resources mapping="/images/**" location="/images/" cache-period="31556926"/> 	
+	<mvc:resources mapping="/js/**" location="/js/" cache-period="31556926"/> 	
+	<mvc:resources mapping="/css/**" location="/css/" cache-period="31556926"/> 
+	
+	<!-- 权限设置 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/userList"/>
+			<bean class="com.hoo.intercept.LoginHandlerInterceptor"/>
+		</mvc:interceptor> 
+	</mvc:interceptors> 
+  
+</beans > 
